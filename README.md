@@ -17,3 +17,5 @@ Scan a text for runs
 of seventeen syllables
 formed from complete words
 Have Fun!
+
+Run from command line with .txt file; cat test.txt | ruby found_senryu_driver.rb
