@@ -1,4 +1,3 @@
-require 'debugger'
 require 'csv'
 
 class SyllableDictionary
@@ -85,7 +84,7 @@ class SenryuFinder
     match = []
     source.each do |word|
       if counter.count_syllable(word) == nil
-        break
+        return nil
       else
         syllable_count += counter.count_syllable(word)
         match << word
