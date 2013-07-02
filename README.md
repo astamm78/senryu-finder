@@ -9,6 +9,8 @@
 
 Description
 
+	http://rubyquiz.strd6.com/quizzes/224-found-senryu
+
 	Ya’atay Rubyists,
 
 	This week’s quiz comes from Martin DeMello:
@@ -21,3 +23,5 @@ Description
 
 ###Run from command line with:
 ####'.txt file; cat test.txt | ruby found_senryu_driver.rb'
+
+I started this project in this Gist, https://gist.github.com/astamm78/282de9f71e9f9281ca75, before expanding it and moving it to this GitHub repo.
