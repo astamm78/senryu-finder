@@ -1,3 +1,4 @@
+require 'debugger'
 require 'csv'
 
 class SyllableDictionary
@@ -42,12 +43,12 @@ class TextFormater
     format_text
   end
 
-  def remove_space(input)
-    input.gsub(/[\-\,\.\b\s]+|\\n/, " ")
+  def remove_extra_characters(input)
+    input.gsub(/[\-\,\.\b\s\"]+|\\n/, " ")
   end
 
   def format_text
-    remove_space(text).split(" ")
+    remove_extra_characters(text).split(" ")
   end
 
 end
@@ -60,34 +61,48 @@ class SenryuFinder
     @counter = counter
   end
 
+  def find_senryu(array)
+    results = []
+    find_blocks(array, 17).each do |block|
+      results << block if clean_breaks?(syl_sums(block))
+    end
+    print_results(results)
+  end
+
   def find_blocks(array, size)
-    blocks = []
-    array.each_index do |index|
-      word_array = []
-      count = 0
-      until index == array.length - 1
-        if counter.count_syllable(array[index]) == nil
-          break
-        else
-          count += counter.count_syllable(array[index])
-          word_array << array[index]
-          index += 1
-        end
-        if count == size
-          blocks << word_array unless word_array.include?(nil)
-          break
-        elsif count > size
-          break
+    matching_blocks = []
+    until array.length == 0
+      if match = block_of_syllable_for_count(array, size)
+        matching_blocks << match
+      end
+      array.shift
+    end
+    matching_blocks
+  end
+
+  def block_of_syllable_for_count(source, count)
+    syllable_count = 0
+    match = []
+    source.each do |word|
+      if counter.count_syllable(word) == nil
+        break
+      else
+        syllable_count += counter.count_syllable(word)
+        match << word
+        if syllable_count > count
+          return nil
+        elsif syllable_count == count
+          return match
         end
       end
     end
-    blocks
+    nil
   end
 
   def syl_sums(array)
     totals_count = []
     sum = 0
-    count_each_word(array).each { |i| totals_count << sum += i }
+    count_each_word(array).each { |i| totals_count << sum += i unless i == nil }
     totals_count
   end
 
@@ -101,14 +116,6 @@ class SenryuFinder
 
   def print_results(array)
     array.each { |result| puts result.join(" ")}
-  end
-
-  def find_senryu(array)
-    results = []
-    find_blocks(array, 17).each do |block|
-      results << block if clean_breaks?(syl_sums(block))
-    end
-    print_results(results)
   end
 
 end
