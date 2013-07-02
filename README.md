@@ -1,5 +1,4 @@
 #senryu-finder
-=============
 
 ##Scan a block of text, return all senryu
 
