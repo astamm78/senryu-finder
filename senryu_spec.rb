@@ -108,7 +108,24 @@ describe "SenryuFinder" do
     expect { @finder.print_results }.to raise_exception
   end
 
-  it "should return a string from the input array" do
+  it "should require an input array for find_blocks" do
+    expect { @finder.find_blocks(2) }.to raise_exception
+  end
+
+  it "should require a block size for find_blocks" do
+    expect { @finder.find_blocks(["testing"]) }.to raise_exception
+  end
+
+  it "should return blocks of a given size" do
+    @finder.find_blocks(["testing", "test", "this"], 2).should eq [["testing"], ["test", "this"]]
+  end
+
+  it "should find a senryu from an input array" do
+    text = ["nil", "testing", "test", "testing", "test", "this", "is", "testing", "testing", "testing", "testing", "test", "test"]
+    @finder.find_senryu(text).should eq [["testing", "test", "testing", "test", "this", "is", "testing", "testing", "testing", "testing", "test"]]
+  end
+
+  it "should receive a string from the input array with print_results" do
     array = [["test", "this"]]
     @finder.should_receive(:puts).with("test this")
     @finder.print_results(array)
