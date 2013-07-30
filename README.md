@@ -21,6 +21,6 @@ Description
 	Have Fun!
 
 ###Run from command line with:
-####'.txt file; cat test.txt | ruby found_senryu_driver.rb'
+####'cat test.txt | ruby found_senryu_driver.rb'
 
 I started this project in this Gist, https://gist.github.com/astamm78/282de9f71e9f9281ca75, before expanding it and moving it to this GitHub repo.
